@@ -53,8 +53,8 @@ case 2 : deplacement_souris(&entity , &background);
 
 if collisionBox(objet,perso)
 {
-  afficher_enigme;
-  if (verifier_enigme==1)
+  afficher_enigme();
+  if (verifier_enigme()==1)
    {
    x=score();
    x=++;
