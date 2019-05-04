@@ -1,10 +1,8 @@
 #include <stdio.h>
-#include  <stdlib.h>
-#include  <SDL/SDL.h>
+#include <stdlib.h>
+#include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include "objet.h"
-#include <math.h>
-#include <stdbool.h>
 
 void sauvegarde(SDL_Surface * menu2,SDL_Surface * menu22,SDL_Rect * posmenu2,SDL_Rect * posmenu22,FILE * fichier)
 {  switch(event.type)
