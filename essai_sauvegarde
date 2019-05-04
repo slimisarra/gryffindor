@@ -76,6 +76,6 @@ int sauvvie,sauvnbq;
            {fichier=fopen("sauvegarde.txt","w+")
             if (fichier !=NULL)
                 {fscanf(fichier,"%d%d%d%d",&positionsauv.x,&posotionsauv.y,&sauvvie,&sauvnbq);
-                initialiserperso(); //initialiser le personnage en utilisant les données recupérées du fichier
+                initialiserperso(); //initialiser le personnage en utilisant les donnÃ©es recupÃ©rÃ©es du fichier
                 remove("sauvegarde.txt");}}break;}
 }
