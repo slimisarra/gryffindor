@@ -23,6 +23,6 @@ bool CollisionTrigoInsc (*Player,*C_Object,Pposition,Oposition); //collision tri
 
 bool CollisionTrigoCir (*Player,*C_Object,Pposition,Oposition); //collision circ
 
-int modifscore(*Player,obj1,obj2,Pposition,scoreplus,scoremoins,score,sc_position); //modification score
+int modifscore(*Player,obj1,obj2,Pposition,scoreplus,scoremoins,score,sc_position); //modification du score ou de vies selon collisions et collecte d objets
 
 #endif // OBJET_H_INCLUDED
