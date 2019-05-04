@@ -14,11 +14,11 @@ SDL_Surface* init_affich_objet( SDL_Surface *image ,SDL_Rect *Oposition,  int x 
 {   image =  IMG_Load((nom_obj)->image1);
      if  ( image  ==  NULL )  {
          printf ( "Can not load image of tux: %s \n " , SDL_GetError ());
-         exit ( 1 );
+         exit ( 1 ); //erreur du chargement de l image
      }
      else  { SDL_BlitSurface(image, NULL, ecran,&Oposition);
              SDL_Flip(ecran);
-             Oposition->x =x;
+             Oposition->x =x; //initialisation de  objet a la position x,y
              Oposition->y =y;}
 return image ;
    //SDL_FreeSurface(image);
@@ -50,17 +50,20 @@ int modifscore(SDL_Surface *Player,SDL_Rect Pposition,SDL_Surface scoreplus,SDL_
 {int i;
 for (i=0;i++;i<20)
 {if (CollisionTrigoInsc(*Player,Meat[i].image1,Pposition,Meat[i].position1)||(CollisionTrigoCir(*Player,Meat[i].image1,Pposition,Meat[i].position1)))
-    vie=vie+1;
+    if (vie>0 && vie<3) //Max de vie =3
+	    vie=vie+1; //Le joueur a collecté l objet qui lui additionne une vie
     image = IMG_Load("scoreplus.png");
-     sc_position.x=(2000/2);
+     sc_position.x=(2000/2); //affichage d un signal ou photo png qui indique +1 de vie au centre de l ecran
      sc_position.y=(1300/2);
      SDL_BlitSurface(scoreplus,NULL,ecran,&sc_position);
-     SDL_Flip(ecran); SDL_FreeSurface (Meat[i].image1);
+     SDL_Flip(ecran);//Mise a jour de l ecran
+     SDL_FreeSurface (image);//disparition de l image du signal
+     SDL_FreeSurface (Meat[i].image1);
 
 if ((CollisionTrigoInsc(*Player,Bone[i].image2,Pposition,Bone[i].position2))||(CollisionTrigoCir(*Player,Bone[i].image2,Pposition,Bone[i].position2))
-    vie=vie-1;
+    vie=vie-1; //Le joueur a collecté l objet qui lui soustrait une vie
     image = IMG_Load("scoremoins.png");
-     sc_position.x=(2000/2);
+     sc_position.x=(2000/2);//affichage d un signal ou photo png qui indique -1 de vie au centre de l ecran
      sc_position.y=(1300/2);
      SDL_BlitSurface(scoremoins,NULL,ecran,&sc_position);
      SDL_Flip(ecran);SDL_FreeSurface (Bone[i].image2);};
