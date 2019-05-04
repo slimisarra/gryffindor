@@ -66,5 +66,7 @@ if ((CollisionTrigoInsc(*Player,Bone[i].image2,Pposition,Bone[i].position2))||(C
      sc_position.x=(2000/2);//affichage d un signal ou photo png qui indique -1 de vie au centre de l ecran
      sc_position.y=(1300/2);
      SDL_BlitSurface(scoremoins,NULL,ecran,&sc_position);
-     SDL_Flip(ecran);SDL_FreeSurface (Bone[i].image2);};
+     SDL_Flip(ecran);
+     SDL_FreeSurface (image);//disparition de l image du signal
+     SDL_FreeSurface (Bone[i].image2);};
 return vie}
