@@ -57,7 +57,7 @@ void sauvegarde(SDL_Surface * menu2,SDL_Surface * menu22,SDL_Rect * posmenu2,SDL
 }
 
 
-void reprendre(FILE * fichier,SDL_Surface image)
+void reprendre(FILE * fichier,SDL_Surface * image)
 {SDL_Rect positionsauv;
 int sauvvie,sauvnbq;
      image = IMG_Load("sousmenu1.png");
@@ -68,12 +68,14 @@ int sauvvie,sauvnbq;
      switch(event.type)
      { if(((event.key.keysym.sym=='n')||(event.key.keysym.sym=='N')))
            //entrer dans le jeu et perdre la sauvegarde
-           remove("sauvegarde.txt");break;
+           {SDL_FreeSurface (&image);
+           remove("sauvegarde.txt");break;}
 
        else if ((event.key.keysym.sym=='y')||(event.key.keysym.sym=='Y'))
            {fichier=fopen("sauvegarde.txt","w+")
             if (fichier !=NULL)
                 {fscanf(fichier,"%d%d%d%d",&positionsauv.x,&posotionsauv.y,&sauvvie,&sauvnbq);
                 initialiserperso(); //initialiser le personnage en utilisant les données recupérées du fichier
+                SDL_FreeSurface(&image);
                 remove("sauvegarde.txt");}}break;}
 }
