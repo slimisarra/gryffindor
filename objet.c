@@ -60,7 +60,7 @@ for (i=0;i++;i<20)
      SDL_FreeSurface (&image);//disparition de l image du signal
      SDL_FreeSurface (Meat[i].image1); //disparition de l objet
 
-if ((CollisionTrigoInsc(*Player,Bone[i].image2,Pposition,Bone[i].position2))||(CollisionTrigoCir(*Player,Bone[i].image2,Pposition,Bone[i].position2))
+if ((CollisionTrigoInsc(&Player,Bone[i].image2,Pposition,Bone[i].position2))||(CollisionTrigoCir(&Player,Bone[i].image2,Pposition,Bone[i].position2))
     vie=vie-1; //Le joueur a collecté l objet qui lui soustrait une vie
     image = IMG_Load("scoremoins.png");
      sc_position.x=(2000/2);//affichage d un signal ou photo png qui indique -1 de vie au centre de l ecran
