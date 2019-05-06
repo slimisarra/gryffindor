@@ -1,3 +1,7 @@
+/**
+ *@file objet.c
+ */
+
 #include <stdio.h>
 #include  <stdlib.h>
 #include  <SDL/SDL.h>
@@ -6,7 +10,15 @@
 #include <math.h>
 #include <stdbool.h>
 
-
+/**
+ *@brief to initialize/show objects
+ *@param image for the object
+ *@param Oposition for object position (initial NULL position)
+ *@param x for the position chosen
+ *@param y for the position chosen
+ *@return image
+ *
+*/
 
 //Initialisation+affichage Objet avec x et y les positions selon background et obstacles
 
@@ -14,15 +26,25 @@ SDL_Surface* init_affich_objet( SDL_Surface *image ,SDL_Rect *Oposition,  int x 
 {   image =  IMG_Load((nom_obj)->image1);
      if  ( image  ==  NULL )  {
          printf ( "Can not load image of tux: %s \n " , SDL_GetError ());
-         exit ( 1 ); //erreur du chargement de l image
+         exit ( 1 );
      }
-     else  { SDL_BlitSurface(&image, NULL, ecran,&Oposition);
+     else  { SDL_BlitSurface(image, NULL, ecran,&Oposition);
              SDL_Flip(ecran);
-             Oposition->x =x; //initialisation de  objet a la position x,y
+             Oposition->x =x;
              Oposition->y =y;}
 return image ;
-   //SDL_FreeSurface(&image);
+   //SDL_FreeSurface(image);
     //SDL_Quit();}
+
+/**
+ *@brief detect trigonometric collision
+ *@param Player for player
+ *@param C_Object for object
+ *@param Pposition for player position
+ *@param Oposition for object position
+ *@return true/false (depends on collision)
+ *
+*/
 
 //Collision trigo
 
@@ -33,6 +55,15 @@ if ( (((Oposition.x+(Oposition.w/2))-(Pposition.x+(Pposition.w/2))) <= ((Ppositi
 
 else return false ;}
 
+/**
+ *@brief detect circular collision
+ *@param Player for player
+ *@param C_Object for object
+ *@param Pposition for player position
+ *@param Oposition for object position
+ *@return true/false (depends on collision)
+ *
+*/
 
 bool CollisionTrigoCir ( SDL_Surface *Player , SDL_Surface *C_Object , SDL_Rect Pposition , SDL_Rect Oposition ) //Circ
  {
@@ -45,28 +76,37 @@ bool CollisionTrigoCir ( SDL_Surface *Player , SDL_Surface *C_Object , SDL_Rect 
 
 else return false ;}
 
+/**
+ *@brief to modify score depending on collisions
+ *@param Player for player 
+ *@param Pposition for player position
+ *@param scoreplus for score update (+1)
+ *@param scoremoins for score update (-1)
+ *@param vie for score (number)
+ *@param sc_position for position of update
+ *@return vie
+ *
+*/
 
 int modifscore(SDL_Surface *Player,SDL_Rect Pposition,SDL_Surface scoreplus,SDL_Surface scoremoins,int vie,SDL_Rect sc_position)
-{int i;SDL_Surface *image;
+{int i;SDL_Surface * image;
 for (i=0;i++;i<20)
 {if (CollisionTrigoInsc(&Player,Meat[i].image1,Pposition,Meat[i].position1)||(CollisionTrigoCir(&Player,Meat[i].image1,Pposition,Meat[i].position1)))
-    if (vie>0 && vie<3) //Max de vie =3
-	    vie=vie+1; //Le joueur a collecté l objet qui lui additionne une vie
+    vie=vie+1;
     image = IMG_Load("scoreplus.png");
-     sc_position.x=(2000/2); //affichage d un signal ou photo png qui indique +1 de vie au centre de l ecran
+     sc_position.x=(2000/2);
      sc_position.y=(1300/2);
      SDL_BlitSurface(scoreplus,NULL,ecran,&sc_position);
-     SDL_Flip(ecran);//Mise a jour de l ecran
-     SDL_FreeSurface (&image);//disparition de l image du signal
-     SDL_FreeSurface (Meat[i].image1); //disparition de l objet
+     SDL_Flip(ecran); SDL_FreeSurface (Meat[i].image1);
+     SDL_FreeSurface(&image);
 
 if ((CollisionTrigoInsc(&Player,Bone[i].image2,Pposition,Bone[i].position2))||(CollisionTrigoCir(&Player,Bone[i].image2,Pposition,Bone[i].position2))
-    vie=vie-1; //Le joueur a collecté l objet qui lui soustrait une vie
+    vie=vie-1;
     image = IMG_Load("scoremoins.png");
-     sc_position.x=(2000/2);//affichage d un signal ou photo png qui indique -1 de vie au centre de l ecran
+     sc_position.x=(2000/2);
      sc_position.y=(1300/2);
      SDL_BlitSurface(scoremoins,NULL,ecran,&sc_position);
-     SDL_Flip(ecran);
-     SDL_FreeSurface (&image);//disparition de l image du signal
-     SDL_FreeSurface (Bone[i].image2);}; //disparition de l objet
-return vie}
+     SDL_Flip(ecran);SDL_FreeSurface (Bone[i].image2);
+     SDL_FreeSurface (&image);};
+return vie;
+}
