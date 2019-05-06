@@ -6,6 +6,18 @@
 #include <math.h>
 #include <stdbool.h>
 
+
+
+/**
+ *@brief to save game
+ *@param menu2 for showing menu1
+ *@param menu22 for showing menu2
+ *@param posmenu2 for menu1 position
+ *@param posmenu22 for menu2 position
+ *@param fichier for saving player's positions
+ *@return Nothing
+ *
+*/
 void sauvegarde(SDL_Surface * menu2,SDL_Surface * menu22,SDL_Rect * posmenu2,SDL_Rect * posmenu22,FILE * fichier)
 {  switch(event.type)
         {case SDL_QUIT :
@@ -59,6 +71,16 @@ void sauvegarde(SDL_Surface * menu2,SDL_Surface * menu22,SDL_Rect * posmenu2,SDL
 }
 
 
+
+
+/**
+ *@brief to load game
+ *@param fichier to load player s positions
+ *@param image for showing menu asking to load
+ *@return Nothing
+ *
+*/
+
 void reprendre(FILE * fichier,SDL_Surface image)
 {SDL_Rect positionsauv;
 int sauvvie,sauvnbq;
@@ -80,7 +102,19 @@ int sauvvie,sauvnbq;
                 remove("sauvegarde.txt");}}break;}
 }
 
-
+/**
+ *@brief to show map
+ *@param perso1 for showing player1
+ *@param perso2 for showing player2
+ *@param fond for initialising map
+ *@param map for showing map
+ *@param positionmap for map's position
+ *@param posperso1 for player1 position
+ *@param posperso2 for player2 position
+ *@param ecran for screen
+ *@return Nothing
+ *
+*/
 void affichage_map (SDL_Surface * perso1,SDL_Surface * perso2,SDL_Surface * fond,SDL_Surface * map,SDL_Rect * positionmap,SDL_Rect posperso1,SDL_Rect posperso2,SDL_Surface * ecran)
 {//init_bckg(&b,heartofmira[]);
 do
