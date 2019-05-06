@@ -3,24 +3,22 @@
 #include <SDL/SDL.h>
 #include<SDL/SDL_image.h>
 
-
+/**
+ *@struct ennemi 
+ *@brief struct for ennemi
+*/
 struct ennemi
 {
-SDL_Rect pos;
-SDL_Surface *image ;
-SDL_Rect frame ;
+SDL_Rect pos; /*!<rectangle*/
+SDL_Surface *image ; /*!<surface*/
 };typedef struct ennemi ennemi;
 
 
-void initialiser_afficher(ennemi *e);
-void deplacer_ennemi(ennemi *e);
-void initialiser_joueur(ennemi *e);
-void animate_right(ennemi *e);
-void animate_left(ennemi *e);
-void animate_up(ennemi *e);
-void animate_down(ennemi *e);
-void animate_jump (ennemi *e);
-
+void initialiser_ennemi(ennemi *e);
+void afficher_ennemi(ennemi *e,SDL_Surface *ecran);
+void move_left_Ennemi(ennemi* e);
+void move_right_Ennemi(ennemi* e);
+void deplacemant_aleatoire(ennemi *e);
 
 
 #endif
