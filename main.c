@@ -1,42 +1,61 @@
-/** 
-*@file main.c
-*@brief Testing Program (object)
-*@author Gryffindor
-*@version 0.1
-*@date May 05,2019
+
+#include<stdio.h>
+#include<SDL/SDL.h>
+#include<SDL/SDL_image.h>
+#include"bg.h"
+/**
+* @file main.c
+* @brief Testing Program.
+* @author gryffindor
+* @version 0.1
+* @date mai 05, 2019
 *
-*Testing object
+* Testing program for background scrollilng
 *
 */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "objet.h"
-#include  <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include "objet.h"
-#include <math.h>
-#include <stdbool.h>
 
-int main()
-{Meat Meat[4];
-Bone Bone[6];
-SDL_Surface *image,*Player,*C_Object,scoreplus,scoremoins ;
-SDL_Rect *position,Pposition,Oposition,sc_position;
-int x,y,vie;
-char nom_obj[];
-      //**************NIVEAU 1*****************
-//affichage des objets meat et bone; //taille de l ecran choisie 1600 x 600
-SDL_Surface* init_affich_objet(&image ,Meat[1].position1,800,200,"meat.png");
-SDL_Surface* init_affich_objet(&image ,Meat[2].position1,1500,400,"meat.png");
-SDL_Surface* init_affich_objet(&image ,Bone[1].position1,1200,200,"bone.png");
-SDL_Surface* init_affich_objet(&image ,Bone[2].position1,950,400,"bone.png");
-SDL_Surface* init_affich_objet(&image ,Bone[3].position1,400,200,"meat.png");
+int main(int argc, char *argv[])
 
-//collisions avec les objets soit + soit -
-int modifscore(&Player,Pposition,scoreplus,scoremoins,vie,sc_position);
+{ background b;
+SDL_Event event;
+SDL_Surface*ecran;
+
+if(SDL_Init(SDL_INIT_VIDEO)==-1)// Démarrage de la SDL. Si erreur :
+ 
+ { printf("can't init SDL:%s\n", SDL_GetError() );
+   return EXIT_FAILURE;}
+ 
+ecran=SDL_SetVideoMode(CAMERA_W,CAMERA_H,32,SDL_HWSURFACE | SDL_DOUBLEBUF);// On tente d'ouvrir une fenêtre
 
 
-return 0;
+init_bckg (&b,"heartofmira.png");
+
+afficher_bckg (ecran,b);
+SDL_Flip(ecran);
+
+int continuer=0;
+
+SDL_EnableKeyRepeat (SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
+ while (!continuer)
+  {while (SDL_PollEvent(&event))
+    { switch(event.type)
+      { case SDL_QUIT :
+        continuer=1;
+       break;
+      case SDL_KEYDOWN:
+       switch(event.key.keysym.sym)
+         { case SDLK_RIGHT:
+           scrolldroite (&b);
+            break;}
+      break;}}
+
+ afficher_bckg(ecran,&b);
+ SDL_Flip(ecran);
 }
+ SDL_FreeSurface(ecran);
+ SDL_FreeSurface(b.img);/* On libère la surface */
+    SDL_Quit();
+}
+     
