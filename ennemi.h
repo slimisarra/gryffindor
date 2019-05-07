@@ -1,24 +1,40 @@
+
 #ifndef ENNEMI_H_INCLUDED
 #define ENNEMI_H_INCLUDED
-#include <SDL/SDL.h>
-#include<SDL/SDL_image.h>
+#include "perso.h"
 
-/**
- *@struct ennemi 
- *@brief struct for ennemi
-*/
-struct ennemi
+
+typedef enum STATE STATE;
+enum STATE {WAITING, FOLLOWING, ATTACKING};
+
+
+
+typedef struct 
 {
-SDL_Rect pos; /*!<rectangle*/
-SDL_Surface *image ; /*!<surface*/
-};typedef struct ennemi ennemi;
+	int vie; 
+	SDL_Surface *image ;
+	SDL_Rect pos_es;
+	STATE STATE;
+
+}ennemi;
 
 
-void initialiser_ennemi(ennemi *e);
-void afficher_ennemi(ennemi *e,SDL_Surface *ecran);
-void move_left_Ennemi(ennemi* e);
-void move_right_Ennemi(ennemi* e);
-void deplacemant_aleatoire(ennemi *e);
 
 
-#endif
+
+
+void initialiser_es (ennemi *es);
+void afficher_es(ennemi *es,SDL_Surface *ecran);
+void move_FB_Ennemi(ennemi* es);
+void move_left_Ennemi(ennemi* es);
+void move_right_Ennemi(ennemi* es);
+void mvt_aleatoire_es (ennemi* es,SDL_Surface *ecran);
+void UpdateEnnemi (ennemi *E, perso P,SDL_Surface* screen);
+void IA (ennemi ennemi, perso P, int d1, int d2,SDL_Surface* screen);
+int distance(perso p,ennemi e);
+
+
+
+
+
+#endif // ENNEMI_H_INCLUDED

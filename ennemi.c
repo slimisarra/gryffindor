@@ -1,158 +1,251 @@
-/**
- *@file ennemi.c
-*/
 #include <stdio.h>
-#include <stdlib.h>
-#include<SDL/SDL.h>
-#include<SDL/SDL_image.h>
-#include"ennemi.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
+#include <SDL/SDL_ttf.h>
+#include "ennemi.h" 
+#include "perso.h"
+#include <time.h>
+#include <math.h>
 
-/**
- *@brief  initialiser l'ennemi
- *@param e ennemi 
- *@param pos1 int 
- *@param pos2 int
- *@return Nothing
-*/
 
-void initialiser_ennemi(ennemi *e )
+
+
+
+void initialiser_es (ennemi *es)
 {
-e->image=IMG_Load("ennemi.jpg");
-if (e->image==NULL){printf("impossible de telecharger ennemi");};
-
-e->pos.x=200;
-e->pos.y=250;
-
-SDL_SetColorKey(e->image,SDL_SRCCOLORKEY,SDL_MapRGB(e->image->format,255,255,255));
-
+es->pos_es.x=500;
+es->pos_es.y=380;
+es->image=IMG_Load("m.png");
 }
 
-/**
- *@brief  afficher l'ennemi
- *@param e ennemi 
- *@return Nothing
-*/
 
-void afficher_ennemi(ennemi *e,SDL_Surface *ecran)
+void afficher_es(ennemi *es,SDL_Surface *ecran)
 {
- SDL_BlitSurface(e->image, NULL, ecran, &e->pos);
+ SDL_BlitSurface(es->image, NULL, ecran, &es->pos_es);
  SDL_Flip(ecran);
 }
 
-/**
- *@brief  move left ennemi
- *@param e ennemi 
- *@return Nothing
-*/
 
-void move_left_Ennemi(ennemi* e)
+
+void move_left_Ennemi(ennemi* es)
 {
 int a; 
         			a=((rand()%4)+1);
  				switch (a)
 				     {
                                        case 1:
-                                         e->image = IMG_Load("ml1.png");
+                                         es->image = IMG_Load("ml1.png");
                                          break;
                                        case 2:
-                                         e->image = IMG_Load("ml2.png");
+                                         es->image = IMG_Load("ml2.png");
                                          break;
                                        case 3:
-                                         e->image = IMG_Load("ml3.png");
+                                         es->image = IMG_Load("ml3.png");
                                          break;
 				       case 4:
-                                         e->image = IMG_Load("ml4.png");
+                                         es->image = IMG_Load("ml4.png");
                                          break;
                                      }
 
 }
 
-/**
- *@brief  move right ennemi
- *@param e ennemi 
- *@return Nothing
-*/
 
 
-void move_right_Ennemi(ennemi* e)
+
+
+
+void move_right_Ennemi(ennemi* es)
 {
                                      int a; 
        					 a=((rand()%4)+1);
 					switch (a)
                                     {
                                        case 1:
-                                         e->image = IMG_Load("mr1.png");
+                                         es->image = IMG_Load("mr1.png");
                                          break;
                                        case 2:
-                                         e->image = IMG_Load("mr2.png");
+                                         es->image = IMG_Load("mr2.png");
                                          break;
                                        case 3:
-                                         e->image = IMG_Load("mr3.png");
+                                         es->image = IMG_Load("mr3.png");
                                          break;
 				       case 4:
-                                         e->image = IMG_Load("mr4.png");
+                                         es->image = IMG_Load("mr4.png");
                                          break;
 }
-} 
-/* 
- *@brief: deplacer aleatoirement
- *@param : e ennemi
- *@return : nothing
-*/
-void deplacement_aleatoire(ennemi *e)
+}
+
+
+
+
+
+void move_FB_Ennemi(ennemi* es)
 {
-int a; 
-        a=((rand()%2)+1);
+es->image= IMG_Load("m.png");
+}
+
+
+
+
+
+
+void mvt_aleatoire_es (ennemi* es,SDL_Surface *ecran)
+{
+   
+        srand(time(NULL));
+     
+	int a; 
+        a=((rand()%4)+1);
 
     	
         
 	if (a==1)
         {
-        move_right_Ennemi(e);
-        e->pos.x+=10;
+        move_right_Ennemi(es);
+        es->pos_es.x+=10;
+	es->pos_es.y+=10;
         }
         else if (a==2)
         {
-        move_left_Ennemi(e);
-	e->pos.x-=10;
+        move_left_Ennemi(es);
+	es->pos_es.x-=10;
+	es->pos_es.y-=10;
+        }
+
+
+	else if (a==3)
+        {
+        move_FB_Ennemi(es); //forward
+        es->pos_es.x+=10;
+	es->pos_es.y-=10;
+        }
+        else 
+        {
+        move_FB_Ennemi(es); //back
+	es->pos_es.x-=10;
+	es->pos_es.y+=10;
         }
         
 }
 
-/* 
-  *@brief : partage d'ecran
-  *@param:
-  *@return Nothing
-*/
 
-//void partage_ecran(SDL_Surface *ecran, BACKRGOUND back1 , BACKGROUND back2 , joueur *j1 , joueur *j2):
-//{
-   //init_bck1(&Back1);
-   //init_bck2(Back2);
+int distance(perso p,ennemi e)
+{
+int a,b,c,d,k,l;
+a= p.position.x;
+b= p.position.y;
+c= p.position.x;
+d= p.position.y;
+k=(a-c)*(a-c);
+l=(b-d)*(b-d);
+return sqrt(k+l);
+}
 
-   //afficher_bk1(&ecran,&back1);
-   //afficher_bk2(&ecran,&back2);
 
-   //init_perso(&j1 , "perso1.png");
-   //afficherjoueur(&j1,&ecran);
 
-   //init_perso(&j2 , "perso2.png");
-   //afficherjoueur(&j2,&ecran);
 
-   //int keysheld[323]={0};
-   //SDL_PollEvent(&event)
-   //{
 
-        //switch(event.type)
-         //{ 
-           //case SDL_QUIT:
-             //done =1 ;
-           //case SDL_KEYDOWN:
-             //keysheld[event.key.keysym.sym]=1;
-             //break;
-           //case SDL_KEYUP:
-             //keysheld[event.key.keysym.sym]=0;
-             //break;
-         //default :
-//}
+
+
+
+
+void UpdateEnnemi (ennemi *E, perso P,SDL_Surface* screen)
+{
+	switch (E->STATE)
+	{
+	case WAITING : 
+				mvt_aleatoire_es(E,screen);
+				break; 
+	case FOLLOWING : 
+
+
+if       ((P.position.x<E->pos_es.x)&&(P.position.y<E->pos_es.y))
+         {E->pos_es.x -=10;
+	 E->pos_es.y -=10; 
+	 move_left_Ennemi(E);}
+
+else if  ((P.position.x>E->pos_es.x)&&(P.position.y>E->pos_es.y))
+         {E->pos_es.x +=10;
+	 E->pos_es.y +=10; 
+	 move_right_Ennemi(E);}
+
+else if  ((P.position.x>E->pos_es.x)&&(P.position.y<E->pos_es.y))
+         {E->pos_es.x +=10;
+	 E->pos_es.y -=10;
+	 move_FB_Ennemi(E);} 
+
+else if  ((P.position.x<E->pos_es.x)&&(P.position.y>E->pos_es.y))
+         {E->pos_es.x -=10;
+	 E->pos_es.y +=10; 
+         move_FB_Ennemi(E); }  
+				break;
+	
+
+	case ATTACKING :
+
+if       ((P.position.x<E->pos_es.x)&&(P.position.y<E->pos_es.y))
+
+	 move_left_Ennemi(E);
+
+else if  ((P.position.x>E->pos_es.x)&&(P.position.y>E->pos_es.y))
+
+	 move_right_Ennemi(E);
+
+else if  ((P.position.x>E->pos_es.x)&&(P.position.y<E->pos_es.y))
+
+	 move_FB_Ennemi(E); 
+
+else if  ((P.position.x<E->pos_es.x)&&(P.position.y>E->pos_es.y))
+
+         move_FB_Ennemi(E);   
+				break;
+					
+
+}
+}
+
+
+
+void IA (ennemi ennemi, perso p, int d1, int d2,SDL_Surface* screen)
+{
+if ((distance(p,ennemi)<d1)&&(ennemi.STATE==WAITING))
+		{
+			ennemi.STATE=FOLLOWING;
+			
+		}
+		else if ((distance(p,ennemi)>d1)&&(ennemi.STATE==FOLLOWING))
+		{
+			ennemi.STATE=WAITING;
+			
+		}
+		else if ((distance(p,ennemi)<d2)&&(ennemi.STATE==FOLLOWING))
+		{
+			ennemi.STATE=ATTACKING;
+			p.vie--;
+			
+		}
+		else if ((distance(p,ennemi)<d2)&&(p.vie==0)&&(ennemi.STATE==ATTACKING))
+		{	
+			ennemi.STATE=WAITING;
+			
+		}
+		else if ((distance(p,ennemi)<d1)&&(distance(p,ennemi)>d2)&&(ennemi.STATE==ATTACKING))
+		{	
+			ennemi.STATE=FOLLOWING;
+			
+		}
+		UpdateEnnemi(&ennemi,p,screen);
+
+}
+
+
+
+
+
+
+
+
+
+
 
